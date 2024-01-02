@@ -36,6 +36,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
 
   return (
     <>
+    {/* background */}
       <div
         className="
           justify-center 
@@ -52,14 +53,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
           bg-opacity-70
         "
       >
-        <div className="relative w-full lg:w-3/6 my-6 mx-auto lg:max-w-3xl h-full lg:h-auto">
+        <div className="relative w-full lg:w-3/6 mx-auto lg:max-w-3xl h-full lg:h-auto">
           {/*content*/}
           <div className="
             h-full
             lg:h-auto
             border-0 
             rounded-lg 
-            shadow-lg 
+            shadow-lg
             relative 
             flex 
             flex-col 
@@ -74,7 +75,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
               flex 
               items-center 
               justify-between 
-              p-10 
+              px-10
+              py-6
               rounded-t
               "
             >
@@ -96,11 +98,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
               </button>
             </div>
             {/*body*/}
-            <div className="relative p-10 flex-auto">
+            <div className="relative px-10 flex-auto">
               {body}
             </div>
             {/*footer*/}
-            <div className="flex flex-col gap-2 p-10">
+            <div className="flex flex-col gap-2 px-20 py-5">
               <Button disabled={disabled} label={actionLabel} secondary fullWidth large onClick={handleSubmit} />
               {footer}
             </div>

@@ -20,6 +20,21 @@ const RegisterModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const validateEmail = useCallback(async () => {
+    try {
+      const validEmail = new RegExp(
+        '^[a-z].[0-9]@muj.manipal.edu$'
+     );
+     if(!validEmail.test(email)){
+      throw new Error('Exception message');
+     }
+     return true;
+    } catch (error) {
+      toast.error("Use Manipal Email ID")
+      return false;
+    }
+  }, [email])
+
   const onToggle = useCallback(() => {
     if (isLoading) {
       return;
@@ -32,24 +47,26 @@ const RegisterModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
+
+      validateEmail();
       
-      await axios.post('/api/register', {
-        email,
-        password,
-        username,
-        name,
-      });
+      // await axios.post('/api/register', {
+      //   email,
+      //   password,
+      //   username,
+      //   name,
+      // });
 
-      setIsLoading(false)
+      // setIsLoading(false)
 
-      toast.success('Account created.');
+      // toast.success('Account created.');
 
-      signIn('credentials', {
-        email,
-        password,
-      });
+      // signIn('credentials', {
+      //   email,
+      //   password,
+      // });
 
-      registerModal.onClose();
+      // registerModal.onClose();
     } catch (error) {
       toast.error('Something went wrong');
     } finally {
@@ -59,12 +76,15 @@ const RegisterModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
+      <div>
       <Input
         disabled={isLoading}
         placeholder="Email" 
         value={email} 
-        onChange={(e) => setEmail(e.target.value)} 
+        onChange={(e) => {setEmail(e.target.value)}} 
       />
+      <p className="text-neutral-600 pl-1 text-sm">*Use your Manipal University Email Address.<br />*Your Manipal Email Address will not be shared or displayed to other users.</p>
+      </div>
       <Input 
         disabled={isLoading}
         placeholder="Name" 
@@ -77,6 +97,7 @@ const RegisterModal = () => {
         value={username} 
         onChange={(e) => setUsername(e.target.value)}
       />
+      <div>
       <Input 
         disabled={isLoading}
         placeholder="Password" 
@@ -84,11 +105,13 @@ const RegisterModal = () => {
         value={password} 
         onChange={(e) => setPassword(e.target.value)}
       />
+      <p className="text-neutral-600 pl-1 text-sm">*Your Password should contain atleast one uppercase character, one lowercase character and one numerial character. The length of the password should be atleast 10 characters.</p>
+      </div>
     </div>
   )
 
   const footerContent = (
-    <div className="text-neutral-400 text-center mt-4">
+    <div className="text-neutral-400 text-center mt-2">
       <p>Already have an account?
         <span 
           onClick={onToggle} 
