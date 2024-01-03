@@ -15,7 +15,6 @@ const RegisterModal = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
@@ -50,29 +49,28 @@ const RegisterModal = () => {
 
       validateEmail();
       
-      // await axios.post('/api/register', {
-      //   email,
-      //   password,
-      //   username,
-      //   name,
-      // });
+      await axios.post('/api/register', {
+        email,
+        password,
+        name,
+      });
 
-      // setIsLoading(false)
+      setIsLoading(false)
 
-      // toast.success('Account created.');
+      toast.success('Account created.');
 
-      // signIn('credentials', {
-      //   email,
-      //   password,
-      // });
+      signIn('credentials', {
+        email,
+        password,
+      });
 
-      // registerModal.onClose();
+      registerModal.onClose();
     } catch (error) {
       toast.error('Something went wrong');
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, registerModal, username, name]);
+  }, [email, password, registerModal, name]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -90,12 +88,6 @@ const RegisterModal = () => {
         placeholder="Name" 
         value={name} 
         onChange={(e) => setName(e.target.value)} 
-      />
-      <Input 
-        disabled={isLoading}
-        placeholder="Username" 
-        value={username} 
-        onChange={(e) => setUsername(e.target.value)}
       />
       <div>
       <Input 
