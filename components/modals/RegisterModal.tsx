@@ -19,20 +19,23 @@ const RegisterModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateEmail = useCallback(async () => {
-    try {
+  const validator = useCallback(() => {
       const validEmail = new RegExp(
-        '^[a-z].[0-9]@muj.manipal.edu$'
+        '^[a-z]*.[0-9]*@muj.manipal.edu$'
      );
+     const validPassword = new RegExp(
+      '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'
+   );
      if(!validEmail.test(email)){
-      throw new Error('Exception message');
-     }
-     return true;
-    } catch (error) {
-      toast.error("Use Manipal Email ID")
-      return false;
+      toast.error("Use your Manipal University Email Address")
     }
-  }, [email])
+    else if(!validPassword.test(password)){
+      toast.error("Ensure your password follows the provided instruction")
+    }
+    else{
+       createAccount();
+     }
+  }, [email,password])
 
   const onToggle = useCallback(() => {
     if (isLoading) {
@@ -43,12 +46,10 @@ const RegisterModal = () => {
     loginModal.onOpen();
   }, [loginModal, registerModal, isLoading]);
 
-  const onSubmit = useCallback(async () => {
+  const createAccount = useCallback(async () => {
     try {
       setIsLoading(true);
 
-      validateEmail();
-      
       await axios.post('/api/register', {
         email,
         password,
@@ -66,11 +67,11 @@ const RegisterModal = () => {
 
       registerModal.onClose();
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error('This email already has an account');
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, registerModal, name]);
+  }, [email, password, registerModal, name]); 
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -81,7 +82,7 @@ const RegisterModal = () => {
         value={email} 
         onChange={(e) => {setEmail(e.target.value)}} 
       />
-      <p className="text-neutral-600 pl-1 text-sm">*Use your Manipal University Email Address.<br />*Your Manipal Email Address will not be shared or displayed to other users.</p>
+      <p className="text-neutral-600 pl-1 text-sm">*Use your Manipal University Email Address.<br />*Your Manipal University Email Address will not be shared or displayed to other users.</p>
       </div>
       <Input 
         disabled={isLoading}
@@ -124,7 +125,7 @@ const RegisterModal = () => {
       title="Create an account"
       actionLabel="Register"
       onClose={registerModal.onClose}
-      onSubmit={onSubmit}
+      onSubmit={validator}
       body={bodyContent}
       footer={footerContent}
     />
