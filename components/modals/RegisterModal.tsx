@@ -20,28 +20,28 @@ const RegisterModal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const validator = useCallback(() => {
-      const validEmail = new RegExp(
-        '^[a-z]*.[0-9]*@muj.manipal.edu$'
-     );
-     const validPassword = new RegExp(
+    const validEmail = new RegExp(
+      '^[a-z]*.[0-9]*@muj.manipal.edu$'
+    );
+    const validPassword = new RegExp(
       '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'
-   );
-     if(!validEmail.test(email)){
+    );
+    if (!validEmail.test(email)) {
       toast.error("Use your Manipal University Email Address")
     }
-    else if(!validPassword.test(password)){
+    else if (!validPassword.test(password)) {
       toast.error("Ensure your password follows the provided instruction")
     }
-    else{
-       createAccount();
-     }
-  }, [email,password])
+    else {
+      createAccount();
+    }
+  }, [email, password])
 
   const onToggle = useCallback(() => {
     if (isLoading) {
       return;
     }
-  
+
     registerModal.onClose();
     loginModal.onOpen();
   }, [loginModal, registerModal, isLoading]);
@@ -71,34 +71,34 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, registerModal, name]); 
+  }, [email, password, registerModal, name]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <div>
+        <Input
+          disabled={isLoading}
+          placeholder="Email"
+          value={email}
+          onChange={(e) => { setEmail(e.target.value) }}
+        />
+        <p className="text-neutral-600 pl-1 text-sm">*Use your Manipal University Email Address.<br />*Your Manipal University Email Address will not be shared or displayed to other users.</p>
+      </div>
       <Input
         disabled={isLoading}
-        placeholder="Email" 
-        value={email} 
-        onChange={(e) => {setEmail(e.target.value)}} 
-      />
-      <p className="text-neutral-600 pl-1 text-sm">*Use your Manipal University Email Address.<br />*Your Manipal University Email Address will not be shared or displayed to other users.</p>
-      </div>
-      <Input 
-        disabled={isLoading}
-        placeholder="Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <div>
-      <Input 
-        disabled={isLoading}
-        placeholder="Password" 
-        type="password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <p className="text-neutral-600 pl-1 text-sm">*Your Password should contain atleast one uppercase character, one lowercase character and one numerial character. The length of the password should be atleast 10 characters.</p>
+        <Input
+          disabled={isLoading}
+          placeholder="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <p className="text-neutral-600 pl-1 text-sm">*Your Password should contain atleast one uppercase character, one lowercase character and one numerial character. The length of the password should be atleast 8 characters.</p>
       </div>
     </div>
   )
@@ -106,14 +106,14 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="text-neutral-400 text-center mt-2">
       <p>Already have an account?
-        <span 
-          onClick={onToggle} 
+        <span
+          onClick={onToggle}
           className="
             text-white 
             cursor-pointer 
             hover:underline
           "
-          > Sign in</span>
+        > Sign in</span>
       </p>
     </div>
   )

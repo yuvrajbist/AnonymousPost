@@ -49,8 +49,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
           z-50 
           outline-none 
           focus:outline-none
-          bg-neutral-800
-          bg-opacity-70
+          lg:bg-neutral-800
+          lg:bg-opacity-70
+          bg-black
         "
       >
         <div className="relative w-full lg:w-3/6 mx-auto lg:max-w-3xl h-full lg:h-auto">
