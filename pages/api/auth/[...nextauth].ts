@@ -25,6 +25,10 @@ export const authOptions: AuthOptions = {
           }
         });
 
+        // if(user?.emailVerified){
+        //   throw new Error("Verify your Email first")
+        // }
+
         if (!user || !user?.hashedPassword) {
           throw new Error('Invalid credentials');
         }

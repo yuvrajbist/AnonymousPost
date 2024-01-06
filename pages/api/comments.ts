@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { currentUser } = await serverAuth(req, res);
-    const { body } = req.body;
+    const { body,isAnonymous } = req.body;
     const { postId } = req.query;
 
     if (!postId || typeof postId !== 'string') {
@@ -21,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: {
         body,
         userId: currentUser.id,
-        postId
+        postId,
+        isAnonymous
       }
     });
 

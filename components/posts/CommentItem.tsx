@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { formatDistanceToNowStrict } from 'date-fns';
+import Image from 'next/image';
 
 import Avatar from '../Avatar';
 
@@ -36,18 +37,40 @@ const CommentItem: React.FC<CommentItemProps> = ({ data = {} }) => {
         transition
       ">
       <div className="flex flex-row items-start gap-3">
-        <Avatar userId={data.user.id} />
+      {data.isAnonymous ?
+           <div
+           className={`
+             ${'h-12'}
+             ${'w-12'}
+             rounded-full 
+             hover:opacity-90 
+             transition 
+             cursor-pointer
+             relative
+           `}
+         >
+           <Image
+             fill
+             style={{
+               objectFit: 'cover',
+               borderRadius: '100%'
+             }}
+             alt="Avatar"
+             src={'/images/anonymousProfilePic.jpg'}
+           />
+         </div> :
+          <Avatar userId={data.user.id} />}
         <div>
           <div className="flex flex-row items-center gap-2">
-            <p 
-              onClick={goToUser} 
-              className="
+          <p
+              onClick={data.isAnonymous?undefined:goToUser}
+              className={`
                 text-white 
                 font-semibold 
-                cursor-pointer 
-                hover:underline
-            ">
-              {data.user.name}
+                ${data.isAnonymous?"":"cursor-pointer"} 
+                ${data.isAnonymous?"":"hover:underline"}
+            `}>
+              {data.isAnonymous?"Anonymous":data.user.name}
             </p>
             <span className="text-neutral-500 text-sm">
               {createdAt}

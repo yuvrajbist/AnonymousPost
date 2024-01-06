@@ -28,18 +28,19 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const [body, setBody] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = useCallback(async () => {
+  const onSubmit = useCallback(async (Anonymously:boolean) => {
     try {
       setIsLoading(true);
 
       const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
 
-      await axios.post(url, { body });
+      await axios.post(url, { body, isAnonymous : Anonymously });
 
-      toast.success('Tweet created');
+      toast.success('Post created');
       setBody('');
       mutatePosts();
       mutatePost();
+
     } catch (error) {
       toast.error('Something went wrong');
     } finally {
@@ -74,7 +75,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
               "
               placeholder={placeholder}>
             </textarea>
-            <hr 
+            <hr
               className="
                 opacity-0 
                 peer-focus:opacity-100 
@@ -83,14 +84,19 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 border-neutral-800 
                 transition"
             />
-            <div className="mt-4 flex flex-row justify-end">
-              <Button disabled={isLoading || !body} onClick={onSubmit} label="Tweet" />
+            <div className="mt-4 mb-2 flex flex-row justify-end gap-x-3">
+              <Button disabled={isLoading || !body} onClick={() => {
+                  onSubmit(false)
+              }} label="Post" />
+              <Button disabled={isLoading || !body} onClick={() => {
+                  onSubmit(true)
+              }} label="Post Anonymously" />
             </div>
           </div>
         </div>
       ) : (
         <div className="py-8">
-          <h1 className="text-white text-2xl text-center mb-4 font-bold">Welcome to Twitter</h1>
+          <h1 className="text-white text-2xl text-center mb-4 font-bold">Welcome to ###</h1>
           <div className="flex flex-row items-center justify-center gap-4">
             <Button label="Login" onClick={loginModal.onOpen} />
             <Button label="Register" onClick={registerModal.onOpen} secondary />

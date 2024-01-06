@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { formatDistanceToNowStrict } from 'date-fns';
+import Image from 'next/image';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useCurrentUser from '@/hooks/useCurrentUser';
@@ -18,7 +19,7 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
   const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId});
+  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
 
   const goToUser = useCallback((ev: any) => {
     ev.stopPropagation();
@@ -50,7 +51,7 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
   }, [data.createdAt])
 
   return (
-    <div 
+    <div
       onClick={goToPost}
       className="
         border-b-[1px] 
@@ -61,18 +62,40 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
         transition
       ">
       <div className="flex flex-row items-start gap-3">
-        <Avatar userId={data.user.id} />
+        {data.isAnonymous ?
+           <div
+           className={`
+             ${'h-12'}
+             ${'w-12'}
+             rounded-full 
+             hover:opacity-90 
+             transition 
+             cursor-pointer
+             relative
+           `}
+         >
+           <Image
+             fill
+             style={{
+               objectFit: 'cover',
+               borderRadius: '100%'
+             }}
+             alt="Avatar"
+             src={'/images/anonymousProfilePic.jpg'}
+           />
+         </div> :
+          <Avatar userId={data.user.id} />}
         <div>
           <div className="flex flex-row items-center gap-2">
-            <p 
-              onClick={goToUser} 
-              className="
+            <p
+              onClick={data.isAnonymous?undefined:goToUser}
+              className={`
                 text-white 
                 font-semibold 
-                cursor-pointer 
-                hover:underline
-            ">
-              {data.user.name}
+                ${data.isAnonymous?"":"cursor-pointer"} 
+                ${data.isAnonymous?"":"hover:underline"}
+            `}>
+              {data.isAnonymous?"Anonymous":data.user.name}
             </p>
             <span className="text-neutral-500 text-sm">
               {createdAt}
@@ -82,7 +105,7 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
             {data.body}
           </div>
           <div className="flex flex-row items-center mt-3 gap-10">
-            <div 
+            <div
               className="
                 flex 
                 flex-row 
