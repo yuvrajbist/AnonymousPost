@@ -29,11 +29,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
   const [body, setBody] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState("");
-  const [word, setWord] = useState(0);
 
-  const charLimit = useCallback(async () =>{
-    
-  }, [body, word])
   const onSubmit = useCallback(async (Anonymously:boolean) => {
     try {
       setIsLoading(true);
@@ -83,6 +79,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
               "
               placeholder={placeholder}>
             </textarea>
+            <p className='w-full text-neutral-700 py-1 text-right'>{body.length}/1000</p>
             <hr
               className="
                 opacity-0 
