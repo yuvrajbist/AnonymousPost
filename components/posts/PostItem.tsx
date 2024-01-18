@@ -50,7 +50,14 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
     return formatDistanceToNowStrict(new Date(data.createdAt));
   }, [data.createdAt])
 
+  const onImageClick = useCallback(async (ev: any) => {
+    ev.stopPropagation();
+
+    router.push(`${data.image}`)
+  },[router, data.image])
+
   return (
+    // Layout of the post item
     <div
       onClick={goToPost}
       className="
@@ -62,9 +69,10 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
         transition
       ">
       <div className="flex flex-row items-start gap-3">
-        {data.isAnonymous ?
-           <div
-           className={`
+        {/*1st item: Profile image */}
+        {data.isAnonymous ? 
+          <div
+            className={`
              ${'h-12'}
              ${'w-12'}
              rounded-full 
@@ -73,37 +81,56 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
              cursor-pointer
              relative
            `}
-         >
-           <Image
-             fill
-             style={{
-               objectFit: 'cover',
-               borderRadius: '100%'
-             }}
-             alt="Avatar"
-             src={'/images/anonymousProfilePic.jpg'}
-           />
-         </div> :
+          >
+            <Image
+              fill
+              style={{
+                objectFit: 'cover',
+                borderRadius: '100%'
+              }}
+              alt="Avatar"
+              src={'/images/anonymousProfilePic.jpg'}
+            />
+          </div> :
           <Avatar userId={data.user.id} />}
+        {/* 2nd item: data of the post */}
         <div>
+          {/* Username and Created at */}
           <div className="flex flex-row items-center gap-2">
             <p
-              onClick={data.isAnonymous?undefined:goToUser}
+              onClick={data.isAnonymous ? undefined : goToUser}
               className={`
                 text-white 
                 font-semibold 
-                ${data.isAnonymous?"":"cursor-pointer"} 
-                ${data.isAnonymous?"":"hover:underline"}
+                ${data.isAnonymous ? "" : "cursor-pointer"} 
+                ${data.isAnonymous ? "" : "hover:underline"}
             `}>
-              {data.isAnonymous?"Anonymous":data.user.name}
+              {data.isAnonymous ? "Anonymous" : data.user.name}
             </p>
             <span className="text-neutral-500 text-sm">
               {createdAt}
             </span>
           </div>
+          {/* Post Text */}
           <div className="text-white mt-1">
             {data.body}
           </div>
+          {/* Post Image */}
+          {data.image &&
+          <div
+            className={' border-1 border-black h-64 w-64 my-10  hover:opacity-90 transition cursor-pointer relative '
+            }
+          >
+            <Image
+              fill
+              style={{
+                objectFit: 'contain',
+              }}
+              alt="Post Image"
+              // onClick={onImageClick}
+              src={data.image}
+            />
+          </div>}
           <div className="flex flex-row items-center mt-3 gap-10">
             <div
               className="

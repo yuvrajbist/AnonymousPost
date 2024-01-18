@@ -79,6 +79,21 @@ const CommentItem: React.FC<CommentItemProps> = ({ data = {} }) => {
           <div className="text-white mt-1">
             {data.body}
           </div>
+          {data.image &&
+          <div
+            className={' border-1 border-black h-64 w-64 my-10 hover:opacity-90 transition cursor-pointer relative '
+            }
+          >
+            <Image
+              fill
+              style={{
+                objectFit: 'contain',
+              }}
+              alt="Post Image"
+              // onClick={onImageClick}
+              src={data.image}
+            />
+          </div>}
         </div>
       </div>
     </div>

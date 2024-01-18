@@ -10,6 +10,7 @@ import usePost from '@/hooks/usePost';
 
 import Avatar from './Avatar';
 import Button from './Button';
+import ImageUpload from './ImageUpload';
 
 interface FormProps {
   placeholder: string;
@@ -27,17 +28,23 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
 
   const [body, setBody] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState("");
+  const [word, setWord] = useState(0);
 
+  const charLimit = useCallback(async () =>{
+    
+  }, [body, word])
   const onSubmit = useCallback(async (Anonymously:boolean) => {
     try {
       setIsLoading(true);
 
       const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
 
-      await axios.post(url, { body, isAnonymous : Anonymously });
+      await axios.post(url, { body, isAnonymous : Anonymously, image });
 
       toast.success('Post created');
       setBody('');
+      setImage('');
       mutatePosts();
       mutatePost();
 
@@ -46,7 +53,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [body, mutatePosts, isComment, postId, mutatePost]);
+  }, [body,, image, mutatePosts, isComment, postId, mutatePost]);
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -60,6 +67,7 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
               disabled={isLoading}
               onChange={(event) => setBody(event.target.value)}
               value={body}
+              maxLength={1000}
               className="
                 disabled:opacity-80
                 peer
@@ -84,8 +92,9 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
                 border-neutral-800 
                 transition"
             />
+            <ImageUpload value={image} disabled={isLoading} onChange={(image) => setImage(image)} label="Upload Image" />
             <div className="mt-4 mb-2 flex flex-row justify-end gap-x-3">
-              <Button disabled={isLoading || !body} onClick={() => {
+              <Button disabled={isLoading || !body || !image} onClick={() => {
                   onSubmit(false)
               }} label="Post" />
               <Button disabled={isLoading || !body} onClick={() => {

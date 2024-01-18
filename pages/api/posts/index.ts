@@ -12,13 +12,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     if (req.method === 'POST') {
       const { currentUser } = await serverAuth(req, res);
-      const { body,isAnonymous } = req.body;
+      const { body,isAnonymous,image } = req.body;
 
       const post = await prisma.post.create({
         data: {
           body,
           userId: currentUser.id,
           isAnonymous,
+          image,
         }
       });
 
@@ -35,7 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (userId && typeof userId === 'string') {
         posts = await prisma.post.findMany({
           where: {
-            userId
+            userId,
+            isAnonymous:false
           },
           include: {
             user: true,

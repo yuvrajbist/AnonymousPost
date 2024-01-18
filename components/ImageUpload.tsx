@@ -7,9 +7,10 @@ interface DropzoneProps {
   label: string;
   value?: string;
   disabled?: boolean;
+  post?: boolean;
 }
 
-const ImageUpload: React.FC<DropzoneProps> = ({ onChange, label, value, disabled }) => {
+const ImageUpload: React.FC<DropzoneProps> = ({ onChange, label, value, disabled, post }) => {
   const [base64, setBase64] = useState(value);
 
   const handleChange = useCallback((base64: string) => {
@@ -37,7 +38,7 @@ const ImageUpload: React.FC<DropzoneProps> = ({ onChange, label, value, disabled
   });
 
   return ( 
-    <div {...getRootProps({className: 'w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700'})}>
+    <div {...getRootProps({className: 'w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700 cursor-pointer'})}>
       <input {...getInputProps()} />
       {base64 ? (
         <div className="flex items-center justify-center">
