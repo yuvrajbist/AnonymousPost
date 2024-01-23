@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface DropzoneProps {
   onChange: (base64: string) => void;
@@ -37,17 +38,24 @@ const ImageUpload: React.FC<DropzoneProps> = ({ onChange, label, value, disabled
     } 
   });
 
+  const onCrossClick = useCallback(async (ev:any) => {
+    ev.stopPropagation();
+    setBase64(undefined);
+    handleChange("");
+  },[])
+
   return ( 
     <div {...getRootProps({className: 'w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700 cursor-pointer'})}>
       <input {...getInputProps()} />
       {base64 ? (
-        <div className="flex items-center justify-center">
+        <div className="relative flex items-center justify-center">
           <Image
             src={base64}
             height="100"
             width="100"
             alt="Uploaded image"
           />
+          <AiOutlineClose className="text-white absolute -top-1 right-0" onClick={onCrossClick} size={20} />
         </div>
       ) : (
         <p className="text-white">{label}</p>

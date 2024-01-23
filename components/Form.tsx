@@ -91,10 +91,10 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
             />
             <ImageUpload value={image} disabled={isLoading} onChange={(image) => setImage(image)} label="Upload Image" />
             <div className="mt-4 mb-2 flex flex-row justify-end gap-x-3">
-              <Button disabled={isLoading || !body || !image} onClick={() => {
+              <Button disabled={isLoading || (!body && !image)} onClick={() => {
                   onSubmit(false)
               }} label="Post" />
-              <Button disabled={isLoading || !body} onClick={() => {
+              <Button disabled={isLoading || (!body && !image)} onClick={() => {
                   onSubmit(true)
               }} label="Post Anonymously" />
             </div>

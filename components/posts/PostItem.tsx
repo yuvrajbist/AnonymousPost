@@ -112,7 +112,7 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
             </span>
           </div>
           {/* Post Text */}
-          <div className="text-white mt-1">
+          <div className="text-white mt-1 w-[450px] break-words">
             {data.body}
           </div>
           {/* Post Image */}
