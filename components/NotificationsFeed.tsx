@@ -1,4 +1,4 @@
-import { BsTwitter } from "react-icons/bs";
+import { IoIosMail } from "react-icons/io";
 
 import useNotifications from "@/hooks/useNotifications";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -24,8 +24,8 @@ const NotificationsFeed = () => {
     <div className="flex flex-col">
       {fetchedNotifications.map((notification: Record<string, any>) => (
         <div key={notification.id} className="flex flex-row items-center p-6 gap-4 border-b-[1px] border-neutral-800">
-          <BsTwitter color="white" size={32} />
-          <p className="text-white">
+          <IoIosMail color="#EEEEEE" size={32} />
+          <p className="text-themeWhite">
             {notification.body}
           </p>
         </div>

@@ -20,7 +20,7 @@ const Header: React.FC<HeaderProps> = ({showBackArrow, label }) => {
         {showBackArrow && (
           <BiArrowBack 
             onClick={handleBack} 
-            color="white" 
+            color="#EEEEEE" 
             size={20} 
             className="
               cursor-pointer 
@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({showBackArrow, label }) => {
               transition
           "/>
         )}
-        <h1 className="text-white text-xl font-semibold">
+        <h1 className="text-themeWhite text-xl font-semibold">
           {label}
         </h1>
       </div>

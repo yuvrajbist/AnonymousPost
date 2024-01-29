@@ -70,11 +70,14 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
       ">
       <div className="flex flex-row items-start gap-3">
         {/*1st item: Profile image */}
+        <div className='w-auto'>
         {data.isAnonymous ? 
           <div
             className={`
-             ${'h-12'}
-             ${'w-12'}
+             h-8
+             w-8
+             md:h-12
+             md:w-12
              rounded-full 
              hover:opacity-90 
              transition 
@@ -93,14 +96,15 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
             />
           </div> :
           <Avatar userId={data.user.id} />}
+          </div>
         {/* 2nd item: data of the post */}
-        <div>
+        <div className='w-full'>
           {/* Username and Created at */}
           <div className="flex flex-row items-center gap-2">
             <p
               onClick={data.isAnonymous ? undefined : goToUser}
               className={`
-                text-white 
+                text-themeWhite 
                 font-semibold 
                 ${data.isAnonymous ? "" : "cursor-pointer"} 
                 ${data.isAnonymous ? "" : "hover:underline"}
@@ -112,13 +116,13 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
             </span>
           </div>
           {/* Post Text */}
-          <div className="text-white mt-1 w-[450px] break-words">
+          <div className="text-themeWhite mt-1 break-all">
             {data.body}
           </div>
           {/* Post Image */}
           {data.image &&
           <div
-            className={' border-1 border-black h-64 w-64 my-10  hover:opacity-90 transition cursor-pointer relative '
+            className={' border-1 border-black h-64 w-auto my-10 hover:opacity-90 transition cursor-pointer relative '
             }
           >
             <Image
@@ -141,7 +145,7 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
                 gap-2 
                 cursor-pointer 
                 transition 
-                hover:text-sky-500
+                hover:text-themeOrange
             ">
               <AiOutlineMessage size={20} />
               <p>

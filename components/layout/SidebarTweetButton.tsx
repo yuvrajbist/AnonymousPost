@@ -3,10 +3,12 @@ import { useRouter } from "next/router";
 
 const SidebarTweetButton = () => {
   const router = useRouter();
+
   return (
-    <div>
+    <div onClick={()=>{router.push("/")}}>
       <div className="
         mt-6
+        mx-auto
         lg:hidden 
         rounded-full 
         h-14
@@ -15,12 +17,12 @@ const SidebarTweetButton = () => {
         flex
         items-center
         justify-center 
-        bg-sky-500 
+        bg-themeOrange 
         hover:bg-opacity-80 
         transition 
         cursor-pointer
       ">
-        <FaFeather size={24} color="white" />
+        <FaFeather size={24} color="#EEEEEE" />
       </div>
       <div className="
         mt-6
@@ -29,7 +31,7 @@ const SidebarTweetButton = () => {
         px-4
         py-2
         rounded-full
-        bg-sky-500
+        bg-themeOrange
         hover:bg-opacity-90 
         cursor-pointer
       ">
@@ -39,10 +41,10 @@ const SidebarTweetButton = () => {
             lg:block 
             text-center
             font-semibold
-            text-white 
+            text-themeWhite 
             text-[20px]
         ">
-          Tweet
+          Post
         </p>
       </div>
     </div>

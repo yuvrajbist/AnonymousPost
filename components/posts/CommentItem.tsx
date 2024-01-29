@@ -65,7 +65,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ data = {} }) => {
           <p
               onClick={data.isAnonymous?undefined:goToUser}
               className={`
-                text-white 
+                text-themeWhite 
                 font-semibold 
                 ${data.isAnonymous?"":"cursor-pointer"} 
                 ${data.isAnonymous?"":"hover:underline"}
@@ -76,7 +76,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ data = {} }) => {
               {createdAt}
             </span>
           </div>
-          <div className="text-white mt-1">
+          <div className="text-themeWhite mt-1">
             {data.body}
           </div>
           {data.image &&

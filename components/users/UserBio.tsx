@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { BiCalendar } from "react-icons/bi";
+import { FaCalendarAlt } from "react-icons/fa";
 import { format } from "date-fns";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -30,14 +30,14 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
   }, [fetchedUser?.createdAt])
 
 
-  return ( 
+  return (
     <div className="border-b-[1px] border-neutral-800 pb-4">
-      <div className="flex justify-end p-2">
+      <div className="flex justify-center p-2">
         {currentUser?.id === userId ? (
           <Button secondary label="Edit" onClick={editModal.onOpen} />
         ) : (
           <Button
-            onClick={toggleFollow} 
+            onClick={toggleFollow}
             label={isFollowing ? 'Unfollow' : 'Follow'}
             secondary={!isFollowing}
             outline={isFollowing}
@@ -45,16 +45,11 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
         )}
       </div>
       <div className="mt-8 px-4">
-        <div className="flex flex-col">
-          <p className="text-white text-2xl font-semibold">
-            {fetchedUser?.name}
-          </p>
-        </div>
         <div className="flex flex-col mt-4">
-          <p className="text-white">
+          <p className="text-themeWhite break-words">
             {fetchedUser?.bio}
           </p>
-          <div 
+          <div
             className="
               flex 
               flex-row 
@@ -63,7 +58,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
               mt-4 
               text-neutral-500
           ">
-            <BiCalendar size={24} />
+            <FaCalendarAlt size={20} />
             <p>
               Joined {createdAt}
             </p>
@@ -71,17 +66,17 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
         </div>
         <div className="flex flex-row items-center mt-4 gap-6">
           <div className="flex flex-row items-center gap-1">
-            <p className="text-white">{fetchedUser?.followingIds?.length}</p>
+            <p className="text-themeWhite">{fetchedUser?.followingIds?.length}</p>
             <p className="text-neutral-500">Following</p>
           </div>
           <div className="flex flex-row items-center gap-1">
-            <p className="text-white">{fetchedUser?.followersCount || 0}</p>
+            <p className="text-themeWhite">{fetchedUser?.followersCount || 0}</p>
             <p className="text-neutral-500">Followers</p>
           </div>
         </div>
       </div>
     </div>
-   );
+  );
 }
- 
+
 export default UserBio;

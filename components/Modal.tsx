@@ -81,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
               rounded-t
               "
             >
-              <h3 className="text-3xl font-semibold text-white">
+              <h3 className="text-3xl font-semibold text-themeWhite">
                 {title}
               </h3>
               <button
@@ -89,7 +89,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
                   p-1 
                   ml-auto
                   border-0 
-                  text-white 
+                  text-themeWhite 
                   hover:opacity-70
                   transition
                 "

@@ -45,7 +45,7 @@ const ImageUpload: React.FC<DropzoneProps> = ({ onChange, label, value, disabled
   },[])
 
   return ( 
-    <div {...getRootProps({className: 'w-full p-4 text-white text-center border-2 border-dotted rounded-md border-neutral-700 cursor-pointer'})}>
+    <div {...getRootProps({className: 'w-full p-4 text-themeWhite text-center border-2 border-dotted rounded-md border-neutral-700 cursor-pointer'})}>
       <input {...getInputProps()} />
       {base64 ? (
         <div className="relative flex items-center justify-center">
@@ -55,10 +55,10 @@ const ImageUpload: React.FC<DropzoneProps> = ({ onChange, label, value, disabled
             width="100"
             alt="Uploaded image"
           />
-          <AiOutlineClose className="text-white absolute -top-1 right-0" onClick={onCrossClick} size={20} />
+          <AiOutlineClose className="text-themeWhite absolute -top-1 right-0" onClick={onCrossClick} size={20} />
         </div>
       ) : (
-        <p className="text-white">{label}</p>
+        <p className="text-themeWhite">{label}</p>
       )}
     </div>
    );

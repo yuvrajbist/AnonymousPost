@@ -11,18 +11,21 @@ interface UserHeroProps {
 const UserHero: React.FC<UserHeroProps> = ({ userId }) => {
   const { data: fetchedUser } = useUser(userId);
 
-  return ( 
+  return (
     <div>
-      <div className="bg-neutral-700 h-44 relative">
-        {fetchedUser?.coverImage && (
+      <div className="flex bg-neutral-800 h-auto justify-between items-center flex-col ">
+        {/* {fetchedUser?.coverImage && (
           <Image src={fetchedUser.coverImage} fill alt="Cover Image" style={{ objectFit: 'cover' }}/>
-        )}
-        <div className="absolute -bottom-16 left-4">
+        )} */}
+        <div className="pt-4 w-auto">
           <Avatar userId={userId} isLarge hasBorder />
         </div>
+        <p className="text-themeWhite text-2xl font-semibold inline pt-2 pb-6">
+          {fetchedUser?.name}
+        </p>
       </div>
     </div>
-   );
+  );
 }
- 
+
 export default UserHero;
