@@ -54,7 +54,7 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
     ev.stopPropagation();
 
     router.push(`${data.image}`)
-  },[router, data.image])
+  }, [router, data.image])
 
   return (
     // Layout of the post item
@@ -71,32 +71,31 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
       <div className="flex flex-row items-start gap-3">
         {/*1st item: Profile image */}
         <div className='w-auto'>
-        {data.isAnonymous ? 
-          <div
-            className={`
+          {data.isAnonymous ?
+            <div
+              className={`
              h-8
              w-8
              md:h-12
              md:w-12
              rounded-full 
-             hover:opacity-90 
              transition 
              cursor-pointer
              relative
            `}
-          >
-            <Image
-              fill
-              style={{
-                objectFit: 'cover',
-                borderRadius: '100%'
-              }}
-              alt="Avatar"
-              src={'/images/anonymousProfilePic.jpg'}
-            />
-          </div> :
-          <Avatar userId={data.user.id} />}
-          </div>
+            >
+              <Image
+                fill
+                style={{
+                  objectFit: 'cover',
+                  borderRadius: '100%'
+                }}
+                alt="Avatar"
+                src={'/images/anonymousProfilePic.jpg'}
+              />
+            </div> :
+            <Avatar userId={data.user.id} />}
+        </div>
         {/* 2nd item: data of the post */}
         <div className='w-full'>
           {/* Username and Created at */}
@@ -116,25 +115,25 @@ const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
             </span>
           </div>
           {/* Post Text */}
-          <div className="text-themeWhite mt-1 break-all">
+          {data.body && <div className="text-themeWhite mt-1 break-all">
             {data.body}
-          </div>
+          </div>}
           {/* Post Image */}
           {data.image &&
-          <div
-            className={' border-1 border-black h-64 w-auto my-10 hover:opacity-90 transition cursor-pointer relative '
-            }
-          >
-            <Image
-              fill
-              style={{
-                objectFit: 'contain',
-              }}
-              alt="Post Image"
-              // onClick={onImageClick}
-              src={data.image}
-            />
-          </div>}
+            <div
+              className={' border-1 border-black h-64 w-auto my-10 hover:opacity-90 transition cursor-pointer relative '
+              }
+            >
+              <Image
+                fill
+                style={{
+                  objectFit: 'contain',
+                }}
+                alt="Post Image"
+                // onClick={onImageClick}
+                src={data.image}
+              />
+            </div>}
           <div className="flex flex-row items-center mt-3 gap-10">
             <div
               className="

@@ -4,11 +4,10 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 
 import prisma from '@/libs/prismadb';
-import { useId } from 'react';
 import { addHours } from 'date-fns';
 
 
-const sendMail = async ({ email, emailType, userId}: any) => {
+const sendMail = async ({ email, emailType, userId }: any) => {
   // const EMAIL_SECRET = 'bkhhkbjhbjhbjhb';
   // console.log("Email sent")
   // jwt.sign(
@@ -33,9 +32,9 @@ const sendMail = async ({ email, emailType, userId}: any) => {
     const hashedToken = await bcrypt.hash(userId.toString(), 10);
     const { data: fetchedUser } = useUser(userId);
     const url = `http://localhost:3000/verifyemail?token=${hashedToken}`
-    const date = addHours(new Date(),36)
+    const date = addHours(new Date(), 36)
 
-    if (emailType === "verify") {
+    if (emailType === "VERIFY") {
       const updateUser = await prisma.user.update({
         where: {
           id: userId,
@@ -46,7 +45,7 @@ const sendMail = async ({ email, emailType, userId}: any) => {
         },
       })
     }
-    else if(emailType === "reset"){
+    else if (emailType === "RESET") {
       const updateUser = await prisma.user.update({
         where: {
           id: userId,
@@ -57,13 +56,22 @@ const sendMail = async ({ email, emailType, userId}: any) => {
         },
       })
     }
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
+    // const transporter = nodemailer.createTransport({
+    //   service: 'Gmail',
+    //   auth: {
+    //     user: 'yuvrajbist@gmail.com',
+    //     pass: 'Rappers4life',
+    //   },
+    // });
+    var transporter = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
       auth: {
-        user: 'yuvrajbist@gmail.com',
-        pass: 'Rappers4life',
-      },
+        user: "2357dc0b2ccbc6",
+        pass: "c84c8f959516ff"
+      }
     });
+
     const mailOptions = {
       from: 'yuvrajbist@gmail.com',
       to: email,
@@ -71,12 +79,14 @@ const sendMail = async ({ email, emailType, userId}: any) => {
       html: `Please click this email to confirm your email: <a href="${url}">${url}</a>`,
     }
 
+
     const res = await transporter.sendMail(mailOptions)
     return res;
 
   } catch (error: any) {
     throw new Error(error.message);
   }
+
 }
 
-export default sendMail;
+export default sendMail

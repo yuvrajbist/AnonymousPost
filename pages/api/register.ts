@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // useEffect(() => {
-  //   sendMail({email:"yuvraj.219301002@muj.manipal.edu",emailType:"verify",userId:"aaa"});
+  //   sendMail({email:"yuvraj.219301002@muj.manipal.edu",emailType:"verify",userId:});
   // });
 
   try {
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     });
 
-    // await sendMail({ email, emailType: "verify", userId: user })
+    // await sendMail({ email, emailType: "VERIFY", userId: user.id })
 
     return res.status(200).json(user);
   } catch (error) {

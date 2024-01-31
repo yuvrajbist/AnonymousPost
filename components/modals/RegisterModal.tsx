@@ -2,16 +2,20 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useCallback, useState } from "react";
 import { signIn } from 'next-auth/react';
+import prisma from '@/libs/prismadb';
 
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import useUser from '@/hooks/useUser';
 
 import Input from "../Input";
 import Modal from "../Modal";
+import sendMail from "@/hooks/useMailer";
 
 const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,6 +59,14 @@ const RegisterModal = () => {
         password,
         name,
       });
+
+      // const user = await prisma.user.findFirst({
+      //   where: {
+      //     email:email
+      //   }
+      // });
+
+      // sendMail({email,emailType:"VERIFY",userId:user?.id})
 
       setIsLoading(false)
 

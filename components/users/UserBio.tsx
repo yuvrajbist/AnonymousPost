@@ -49,7 +49,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
           <p className="text-themeWhite break-words">
             {fetchedUser?.bio}
           </p>
-          <div
+          {/* <div
             className="
               flex 
               flex-row 
@@ -62,7 +62,7 @@ const UserBio: React.FC<UserBioProps> = ({ userId }) => {
             <p>
               Joined {createdAt}
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-row items-center mt-4 gap-6">
           <div className="flex flex-row items-center gap-1">
